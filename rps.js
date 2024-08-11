@@ -1,3 +1,6 @@
+console.log(`Run the function "playGame()" to get started!`)
+
+
 function getComputerChoice() {
     let num = Math.random()
     if (num < (1/3)) {
