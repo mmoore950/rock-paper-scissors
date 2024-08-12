@@ -1,5 +1,3 @@
-console.log(`Run the function "playGame()" to get started!`)
-
 
 function getComputerChoice() {
     let num = Math.random()
@@ -27,31 +25,44 @@ function getHumanChoice() {
 }
 
 
+const buttons = document.querySelectorAll("button")
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        let choice = button.classList[0]
+        playRound(choice, getComputerChoice())
+    })
+})
+
+let humanScore = 0
+let computerScore = 0
+const computerScoreNode = document.getElementById("comp-score")
+const humanScoreNode = document.getElementById("human-score")
+const displayText = document.getElementById("display-text")
 
 
-
-function playGame() {
-    var humanScore = 0;
-    var computerScore = 0;
-
-    function playRound(humanChoice, computerChoice) {
-        if (humanChoice == computerChoice) {
-            console.log("It's a tie! Play again")
-        } else if (humanChoice == "rock" && computerChoice == "scissors"
-                    || humanChoice == "scissors" && computerChoice == "paper"
-                    || humanChoice == "paper" && computerChoice == "rock") {
-            console.log( humanChoice + " beats " + computerChoice + ". You win! :)")
-            humanScore ++;
-        } else {console.log( computerChoice + " beats " + humanChoice + ". You lose! :(")
-            computerScore++;
-        }
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice == computerChoice) {
+        displayText.textContent =  `You both played ${humanChoice}! It's a tie!`
+    } else if (humanChoice == "rock" && computerChoice == "scissors"
+                || humanChoice == "scissors" && computerChoice == "paper"
+                || humanChoice == "paper" && computerChoice == "rock") {
+        displayText.textContent = `${humanChoice} beats ${computerChoice}! You win! :)`
+        humanScore ++;
+    } else {
+        displayText.textContent = `${computerChoice} beats ${humanChoice}! You lose! :(`
+        computerScore++;
     }
+    displayScore()
+    checkWinner()
+}
 
-    for (let i = 1; i < 6; i++) {
-        console.log("Time for Round " + i + "/5! The score is Human: " + humanScore + ", Robot: " + computerScore + ".")
-        playRound(getHumanChoice(), getComputerChoice())
+function displayScore() {
+    computerScoreNode.textContent = `${computerScore}`
+    humanScoreNode.textContent = `${humanScore}`
+}
+
+function checkWinner() {
+    if (humanScore == 5 || computerScore == 5) {
+        display
     }
-    if (humanScore > computerScore) {console.log("You've won the game " + humanScore + " to " + computerScore + " ! :)")}
-    else if (computerScore > humanScore) (console.log("You've lost the game " + computerScore + " to " + humanScore + " ! :("))
-    else {console.log("It's a tie of " + humanScore + " to " + computerScore + " !")}
 }
